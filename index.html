@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VueJs</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="components/message.js"></script>
+    <script src="components/computed-prop.js"></script>
+    <script src="components/methods.js"></script>
+    <script src="components/vmodel.js"></script>
+    <script src="components/vmodel-array.js"></script>
+    <script src="components/emit.js"></script>
+    <script src="components/parent-data.js"></script>
+    <script src="components/child-data.js"></script>
+    <script src="components/child-methods.js"></script>
+    <script src="components/ciclos.js"></script>
+    <script src="components/condicionales.js"></script>
+    <script src="components/layout.js"></script>
+    <script src="components/watcher.js"></script>
+    <script src="components/computed-obj.js"></script>
+
+</head>
+<body>
+    <!--Todo componente debe tener un template, atrtibudo data dentro de componente, retorna un objeto y ahi colocamos nuestras variables, propiedades computadas para calular propiedades, vmodel para bindear data-->
+    
+        <div id="app">
+            <message></message>
+            <computed-prop></computed-prop>
+            <methods></methods>
+            <vmodel></vmodel> <!--Bindeo de data, conectar informacion con una variable y asingar a los labels que necesite -->
+            <vmodel-array></vmodel-array><!--Lo mismo anterior pero un array -->
+            <emit @show-marca-ropa="alertMarcaRopa"></emit><!-- emitir eventos del padre desde el hijo, paso una funcion desde el padre que ejecutara el hijo, en este caso mando una funcion que se llama show-marca-ropa, que el hijo ejecuta dentro de su template -->
+            <parent-data></parent-data> 
+            <child-data ref="childData"></child-data><!--Acceder a data del hijo a traves de referencias-->
+            <child-methods ref="childMethod"></child-methods>
+            <ciclos></ciclos>
+            <condicionales></condicionales>
+            <layout>
+                <p>Este es el contenido del Main</p>
+                <template slot="header">
+                    <h3>Slot Header</h3>
+                </template>
+                <template slot="footer">
+                    <h4>elemento del slot footer</h4>
+                </template>
+            </layout>
+            <watcher></watcher>
+            <computed-obj></computed-obj>
+        </div> 
+    
+    <script>      
+        new Vue({
+
+            el: '#app',
+            data(){
+
+                return{
+                    appName:"Intro VueJs"
+                }
+            },
+            mounted(){
+                console.log("Componente padre Montado!");
+                console.log(this);
+                console.log(this.$refs.childData.text);
+
+                setTimeout(()=>{
+                    this.$refs.childMethod.showCmpName();
+
+                }, 3000);
+            },
+            methods: {
+                alertMarcaRopa(nombreMarca)
+                {
+                    alert(nombreMarca);
+
+                }
+            }
+            
+        })
+    </script>
+    
+</body>
+</html>
